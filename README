@@ -1,0 +1,48 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=3504
+
+taglist-plus.vim
+================
+
+This is a fork of the popular taglist.vim plugin.
+
+Taglist-plus provides excellent Javascript support via jsctags. See this post
+for examples:
+
+    http://discontinuously.com/2011/03/vim-support-javascript-taglist-plus/
+
+This plugin can also be obtained from github:
+
+    https://github.com/int3/vim-taglist-plus
+
+Installation
+------------
+
+Unzip the files to your `.vim` directory.
+
+Taglist-plus requires jsctags for enhanced Javascript functionality. Jsctags
+can be obtained via github:
+
+    https://github.com/mozilla/doctorjs
+
+Jsctags requires a recent version of node.js -- the default one provided in
+Maverick Meerkat won't cut it. You can build it from source:
+
+    http://nodejs.org/#download
+
+or get it via this PPA:
+
+    https://launchpad.net/~richarvey/+archive/nodester
+
+If you're going the PPA route, you'll need to map `nodejs` to `node`. Here are
+the commands:
+sudo add-apt-repository ppa:richarvey/nodester
+sudo apt-get update
+sudo apt-get install nodejs
+sudo ln -s /usr/bin/nodejs /usr/local/bin/node
+
+Usage
+-----
+
+`:TlistToggle` brings up the taglist window.  More commands can be found via
+`:help taglist-commands`.
+
