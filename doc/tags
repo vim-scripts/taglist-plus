@@ -23,6 +23,7 @@
 'Tlist_Use_SingleClick'	taglist-plus.txt	/*'Tlist_Use_SingleClick'*
 'Tlist_WinHeight'	taglist-plus.txt	/*'Tlist_WinHeight'*
 'Tlist_WinWidth'	taglist-plus.txt	/*'Tlist_WinWidth'*
+'Tlist_javascript_Hide_Extras'	taglist-plus.txt	/*'Tlist_javascript_Hide_Extras'*
 :TlistAddFiles	taglist-plus.txt	/*:TlistAddFiles*
 :TlistAddFilesRecursive	taglist-plus.txt	/*:TlistAddFilesRecursive*
 :TlistClose	taglist-plus.txt	/*:TlistClose*

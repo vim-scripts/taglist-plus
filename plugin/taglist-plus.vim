@@ -412,10 +412,10 @@ let s:tlist_def_javascript_settings = 'javascript;f:function;v:variable'
 if !exists('Tlist_javascript_Ctags_Cmd') && executable('jsctags')
     let Tlist_javascript_Ctags_Cmd = 'jsctags'
 endif
-let Tlist_javascript_Ctags_Allowed_Flags = ['-f', '--sort']
-if !exists('Tlist_javascript_Show_Extras')
-    let Tlist_javascript_Show_Extras = ['namespace', 'type']
+if !exists('Tlist_javascript_Hide_Extras')
+    let Tlist_javascript_Hide_Extras = []
 endif
+let Tlist_javascript_Ctags_Allowed_Flags = ['-f', '--sort']
 
 " lisp language
 let s:tlist_def_lisp_settings = 'lisp;f:function'
@@ -2221,7 +2221,7 @@ function! s:Tlist_Get_Scope_String(tag_line, ftype)
     let ttxt = ''
     let tag_scopes = s:Tlist_Extract_Tag_Scope(a:tag_line)
     for [extradata_name, extradata_content] in items(tag_scopes)
-        if !exists('g:Tlist_{a:ftype}_Show_Extras') || match(g:Tlist_{a:ftype}_Show_Extras, extradata_name) != -1
+        if match(g:Tlist_{a:ftype}_Hide_Extras, extradata_name) == -1
             let ttxt = ttxt . ' [' . extradata_content . ']'
         endif
     endfor
@@ -2844,11 +2844,11 @@ function! s:Tlist_Extract_Tag_Scope(tag_line)
 endfunction
 
 function! s:Tlist_Window_Toggle_Extra(ftype, extra_name)
-    let index = index(g:Tlist_{a:ftype}_Show_Extras, a:extra_name)
+    let index = index(g:Tlist_{a:ftype}_Hide_Extras, a:extra_name)
     if index == -1
-        call add(g:Tlist_{a:ftype}_Show_Extras, a:extra_name)
+        call add(g:Tlist_{a:ftype}_Hide_Extras, a:extra_name)
     else
-        unlet g:Tlist_{a:ftype}_Show_Extras[index]
+        unlet g:Tlist_{a:ftype}_Hide_Extras[index]
     endif
     if s:auto_width
         let g:Tlist_WinWidth = 30
