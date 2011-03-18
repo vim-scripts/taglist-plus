@@ -143,6 +143,7 @@ if !exists('loaded_taglist')
     " Vertically split taglist window width setting
     if !exists('Tlist_WinWidth')
         let Tlist_WinWidth = 30
+        let s:auto_width = 0
     elseif Tlist_WinWidth == 'auto'
         let Tlist_WinWidth = 30
         let s:auto_width = 1
@@ -411,9 +412,6 @@ let s:tlist_def_java_settings = 'java;p:package;c:class;i:interface;' .
 let s:tlist_def_javascript_settings = 'javascript;f:function;v:variable'
 if !exists('Tlist_javascript_Ctags_Cmd') && executable('jsctags')
     let Tlist_javascript_Ctags_Cmd = 'jsctags'
-endif
-if !exists('Tlist_javascript_Hide_Extras')
-    let Tlist_javascript_Hide_Extras = []
 endif
 let Tlist_javascript_Ctags_Allowed_Flags = ['-f', '--sort']
 
@@ -941,7 +939,7 @@ function! s:Tlist_FileType_Init(ftype)
     endwhile
 
     let s:tlist_{a:ftype}_ctags_args = { '--language-force=': ctags_ftype,
-                            \ '--': ctags_ftype, '-types=': ctags_flags }
+                            \ '--'.ctags_ftype.'-types=': ctags_flags }
     let s:tlist_{a:ftype}_count = cnt
     let s:tlist_{a:ftype}_ctags_flags = ctags_flags
 
@@ -2221,7 +2219,7 @@ function! s:Tlist_Get_Scope_String(tag_line, ftype)
     let ttxt = ''
     let tag_scopes = s:Tlist_Extract_Tag_Scope(a:tag_line)
     for [extradata_name, extradata_content] in items(tag_scopes)
-        if match(g:Tlist_{a:ftype}_Hide_Extras, extradata_name) == -1
+        if !exists('g:Tlist_{a:ftype}_Hide_Extras') || match(g:Tlist_{a:ftype}_Hide_Extras, extradata_name) == -1
             let ttxt = ttxt . ' [' . extradata_content . ']'
         endif
     endfor
@@ -2844,6 +2842,9 @@ function! s:Tlist_Extract_Tag_Scope(tag_line)
 endfunction
 
 function! s:Tlist_Window_Toggle_Extra(ftype, extra_name)
+    if !exists('g:Tlist_{a:ftype}_Hide_Extras')
+        return
+    endif
     let index = index(g:Tlist_{a:ftype}_Hide_Extras, a:extra_name)
     if index == -1
         call add(g:Tlist_{a:ftype}_Hide_Extras, a:extra_name)
